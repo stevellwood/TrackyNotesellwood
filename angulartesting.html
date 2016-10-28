@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="AppMod">
+	<head>
+		<title>Tracky Login</title>
+		<link href="CSS/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<!-- LINK TO JQUERY: -->
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+		<!-- JQUERY UI -->
+		<link rel="stylesheet" href="jqueryUI/jquery-ui.min.css">
+		<script src="jqueryUI/external/jquery/jquery.js"></script>
+		<script src="jqueryUI/jquery-ui.min.js"></script>
+		<!-- LINKS TO ANGULAR -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js" type="text/javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.min.js" type="text/javascript"></script>
+		<script src="JS/main.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<!-- MY CSS -->
+		<link rel="stylesheet" type="text/css" href="CSS/styles.css">
+		<script src="CSS/bootstrap/js/bootstrap.min.js"></script>
+	</head>
+	<body ng-controller="AppCtrl as ctrl">
+		<div id="headerDiv">
+			<h1>Tracky</h1>
+		</div>
+		<!-- <script src="JS/test.js"></script> -->
+		<form name="stringForm" novalidate>
+				<span class="requiredflag">*</span>
+				<!-- <span ng-show="stringForm.noten.$error.pattern" style="color:red">Enter only words or numbers.</span> -->
+				<span class="error" ng-show="stringForm.noten.$error.required && stringForm.noten.$dirty">(Required field)</span>
+					<textarea  class="form-control" ng-model="ctrl.string" name="noten"  placeholder='Enter note here' id="popupNoteInput" rows="5" required></textarea>
+
+					<!-- <input type="text" ng-model="number" name="number" ng-pattern="RE" /><br /> "required" is all that is needed to prevent space entry  ng-pattern="ctrl.regex1"-->
+            
+					
+						<div style="text-align:center">
+						<!-- <input type="submit" value = "Add Note" stringForm.noten.$valid && ctrl.string=null-->
+						<button class="btn btn-info" id="addNoteBtn" 
+						ng-click="ctrl.regtest(ctrl.string); ">Add Note1</button>
+					</form>
+					<br><br><br><br><br><br>{{ctrl.stringreturn}}
+			</div>
+		
+	</body>
+</html>

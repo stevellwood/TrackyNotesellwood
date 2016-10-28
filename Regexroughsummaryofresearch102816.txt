@@ -1,0 +1,78 @@
+//Regex tester
+		//var re = new RegExp(/^([a-z0-9]{5,})$/);works
+		// var re = new RegExp("^([a-z0-9]{5,})$");works
+		//var re = new RegExp(/^[a-zA-Z0-9_]+( +[a-zA-Z0-9_]+)*$/);to allow 1 spacbetween words
+
+		//var re = new RegExp(/^\w+( +\w+)*$/);//to allow multiple spaces between words
+		//If you want to allow tabs and newlines (whitespace characters), then replace the space with a \s+:
+		//var re = new RegExp(/^\w+(\s+\w+\.+)*$/);//last bit doesn't work
+		var re = new RegExp(/^[\w+\s+]/);//this just checks the starting character of the word allows returns spaces up front
+		self.regtest= function(string){
+			var str = string.trim();
+		if (re.test(str)) {
+		    console.log("Valid:", re, str);
+		    self.stringreturn = "Valid ";
+		} else {
+		    console.log("Invalid:",re, string);
+		    self.stringreturn = "InValid ";
+		}}
+//http://stackoverflow.com/questions/17250815/how-to-check-if-the-input-string-is-a-valid-regular-expression
+		//pattern=".{6,}"http://www.w3schools.com/tags/att_input_pattern.asp
+		// self.regex1 = '\/^[a-zA-Z]*$/i';
+		//self.regex1 = '^([a-z0-9]{5,})$'; '\/^[a-zA-Z]{4,}$/';'\\[a-zA-Z0-9_\-]{4,}'
+		//self.regex1 = '\\^([a-z]{4,})$/';
+		//self.regex1 = '\\[a-z]{4,}$';
+		//self.regex1 = '\\d';
+		//self.regex1 = '/^[\w+]/';fail
+		self.regex1 = new RegExp(/^[\w+\s+]/);
+		///^[a-zA-Z]{3,7}$/
+		//self.regex1 = '\\d+';
+		//self.regex1 ="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i";
+		// Delete a note | OPTIONAL (refreshing list doesn't work)
+
+		For this:
+		self.addProjNote = function(note, id){
+			self.targetProjId = id; 
+			//isValid(note)
+			var notetrim = note.trim();
+			var addNote ={}///why do it this way without noteObj.?
+			//if (note !== null) {
+			addNote.message = notetrim;
+			console.log(notetrim);
+			addNote.flagged = 0;
+			addNote.resolved = 0;
+			addNote.project_id = id;
+			addNote.time_stamp = new Date();
+			//}
+			
+			$http({
+				method: 'POST',
+				url: 'http://localhost:8080/note',
+				data: addNote
+			}).then(function(){
+				$http.get('http://localhost:8080/notes/'+self.targetProjId).
+				then(function(resp){
+					self.notes = resp.data;
+				})
+			})
+		} 
+
+		And in html:
+		<form name="stringForm" novalidate>
+				<span class="requiredflag">*</span>
+				<span ng-show="stringForm.noten.$error.pattern" style="color:red">Enter only words or numbers.</span>
+				<span class="error" ng-show="stringForm.noten.$error.required && stringForm.noten.$dirty">(Required field)</span>
+					<textarea class="form-control" ng-model="ctrl.note" name="noten" ng-pattern="ctrl.regex1" placeholder='Enter note here' id="popupNoteInput" rows="5" required></textarea>
+
+					<!-- <input type="text" ng-model="number" name="number" ng-pattern="RE" /><br /> "required" is all that is needed to prevent space entry-->
+            
+					<br>
+						<div style="text-align:center">
+						<!-- <input type="submit" value = "Add Note" stringForm.noten.$valid && -->
+						<button class="btn btn-info" id="addNoteBtn" 
+						ng-click="ctrl.addProjNote(ctrl.note, ctrl.projectObj.id); ctrl.note=null">Add Note1</button>
+					</form>
+						<!-- <button class="btn btn-info" id="addNoteBtn" ng-click="ctrl.addProjNote(ctrl.note, ctrl.projectObj.id); ctrl.note=null">Add Note</button> -->
+						<button class="btn btn-info" id="clear">Clear</button>
+					</div>
+				</div>
